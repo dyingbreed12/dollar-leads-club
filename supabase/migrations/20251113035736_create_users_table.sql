@@ -1,0 +1,22 @@
+create table if not exists users (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name text not null,
+  email text unique not null,
+  password_hash text not null,
+  password_raw text not null,
+  email_verified boolean default false,
+  verification_token text null,
+  password_reset_token text null,
+  password_reset_expires timestamptz null,
+  stripe_customer_id text null,
+  stripe_subscription_id text null,
+  subscription_plan text default null,
+  subscription_status text default null,
+  role text default 'user' check (role in ('user', 'admin')),
+  subscription_current_period_end timestamptz null,
+  trial_end timestamptz null,
+  has_used_trial boolean default false,
+  is_logged_in boolean default false,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
